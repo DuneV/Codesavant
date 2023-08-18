@@ -1,0 +1,18 @@
+{
+    "carrito_mercado": [
+        {
+            "agregar_producto": {
+                "descripcion": "este metodo agrega un producto al carrito de mercado, actualiza el carrito de mercado para que ahora contenga el producto a agregar",
+                "parametros": "este metodo recibe el id del producto que va a agregar al carrito",
+                "return": "no retorna nada"
+            }
+        },
+        {
+            "quitarproducto": {
+                "descripcion": "este metodo agrega un producto al carrito de mercado, actualiza el carrito de mercado para que ahora contenga el producto a agregar",
+                "parametros": "este metodo recibe el id del producto que va a agregar al carrito",
+                "return": "no retorna nada"
+            }
+        }
+    ]
+}
