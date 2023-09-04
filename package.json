@@ -15,19 +15,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "test-extension.helloWorld",
+        "command": "intelliuml.helloWorld",
         "title": "Hello World"
       },
       {
-        "command": "test-extension.sendRequestToServer",
-        "title": "Upload_File"
+        "command": "intelliuml.sendRequestToServer",
+        "title": "IntelliUML: Upload File"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
           "id": "package-UML",
-          "title": "Package Explorer Transformer",
+          "title": "IntelliUML",
           "icon": "resources/70577.png"
         }
       ]
@@ -35,20 +35,16 @@
     "views": {
       "package-UML": [
         {
-          "id": "package-dependencies",
-          "name": "Dependencies"
-        },
-        {
-          "id": "package-outline",
-          "name": "Outline"
+          "id": "extension_commands",
+          "name": "Commands"
         }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "package-dependencies",
-        "contents": "Seneca.\n[Abrir Archivo](command:vscode.openFolder)\n[Clonar Repo](command:git.clone)\n[Subir Archivo](command:test-extension.sendRequestToServer)\nTo learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm).",
-        "when": "config.git.enabled && git.state == initialized && workbenchState == empty"
+        "view": "extension_commands",
+        "contents": "Abre un archivo .XMI \n[Abrir Archivo](command:vscode.openFolder)\n O sube el archivo en el editor activo \n[Subir Archivo](command:intelliuml.sendRequestToServer)"
+        
       }
     ]
   },
