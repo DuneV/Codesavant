@@ -4,6 +4,22 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const axios_1 = require("axios");
 function activate(context) {
+    let openFile = vscode.commands.registerCommand("intelliuml.openFile", () => {
+        // The code you place here will be executed every time your command is executed
+        // Display a message box to the user
+        const openExplorer = require("open-file-explorer");
+        const path = "~";
+        vscode.window.showInformationMessage("Abrir archivo");
+        console.log("hola");
+        openExplorer(path, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                //Do Something
+            }
+        });
+    });
     let sendRequestToServer = vscode.commands.registerCommand("intelliuml.sendRequestToServer", async () => {
         try {
             const activeEditor = vscode.window.activeTextEditor;
@@ -40,6 +56,7 @@ function activate(context) {
         // Display a message box to the user
         vscode.window.showInformationMessage("Hello World from test-extension!");
     });
+    context.subscriptions.push(openFile);
     context.subscriptions.push(sendRequestToServer);
     context.subscriptions.push(helloWorld);
 }

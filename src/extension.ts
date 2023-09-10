@@ -2,6 +2,22 @@ import * as vscode from "vscode";
 import axios from "axios";
 
 export function activate(context: vscode.ExtensionContext) {
+  let openFile = vscode.commands.registerCommand("intelliuml.openFile", () => {
+    // The code you place here will be executed every time your command is executed
+    // Display a message box to the user
+    const openExplorer = require("open-file-explorer");
+    const path = "~";
+    vscode.window.showInformationMessage("Abrir archivo");
+    console.log("hola")
+    openExplorer(path, (err: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        //Do Something
+      }
+    });
+  });
+
   let sendRequestToServer = vscode.commands.registerCommand(
     "intelliuml.sendRequestToServer",
     async () => {
@@ -10,11 +26,11 @@ export function activate(context: vscode.ExtensionContext) {
         if (!activeEditor) {
           vscode.window.showErrorMessage("No hay ningún editor activado");
           return;
-        } else if (activeEditor.document.fileName.slice(-3) != "xmi"){
-			vscode.window.showErrorMessage("Debe subir un archivo .XMI");
-			return
-		}
-		
+        } else if (activeEditor.document.fileName.slice(-3) != "xmi") {
+          vscode.window.showErrorMessage("Debe subir un archivo .XMI");
+          return;
+        }
+
         // Obtén el contenido del archivo abierto actualmente en el editor
         const document = activeEditor.document;
         const fileContent = document.getText();
@@ -24,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Realiza una solicitud POST al servidor con el contenido del archivo
         const response = await axios.post(serverURL, { content: fileContent });
-		console.log(response)
+        console.log(response);
         // Si el servidor responde con éxito, muestra una notificación
         if (response.status === 200) {
           vscode.window.showInformationMessage(
@@ -50,6 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  context.subscriptions.push(openFile);
   context.subscriptions.push(sendRequestToServer);
   context.subscriptions.push(helloWorld);
 }
