@@ -1,21 +1,21 @@
 import * as vscode from "vscode";
 import axios from "axios";
 
+
 export function activate(context: vscode.ExtensionContext) {
-  let openFile = vscode.commands.registerCommand("intelliuml.openFile", () => {
+  let disposable = vscode.commands.registerCommand('intelliuml.disposable', async (fileUri) => {
+    console.log(fileUri);
+  })
+  let openFile = vscode.commands.registerCommand(
+    "intelliuml.openFile", 
+    async () => {
     // The code you place here will be executed every time your command is executed
     // Display a message box to the user
-    const openExplorer = require("open-file-explorer");
-    const path = "~";
+    console.log("Abriendo archivo");
     vscode.window.showInformationMessage("Abrir archivo");
-    console.log("hola")
-    openExplorer(path, (err: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        //Do Something
-      }
-    });
+    const serverURL = "http://localhost:3000/open-file";
+    const response = await axios.post(serverURL,{ content: "~" });
+    console.log(response);
   });
 
   let sendRequestToServer = vscode.commands.registerCommand(
@@ -69,6 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openFile);
   context.subscriptions.push(sendRequestToServer);
   context.subscriptions.push(helloWorld);
+  context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated

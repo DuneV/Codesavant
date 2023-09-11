@@ -4,17 +4,21 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const axios_1 = require("axios");
 function activate(context) {
-    let disposable = vscode.commands.registerCommand('intelliuml.disposable', async (fileUri) => {
-        console.log(fileUri);
-    });
-    let openFile = vscode.commands.registerCommand("intelliuml.openFile", async () => {
+    let openFile = vscode.commands.registerCommand("intelliuml.openFile", () => {
         // The code you place here will be executed every time your command is executed
         // Display a message box to the user
-        console.log("Abriendo archivo");
+        const openExplorer = require("open-file-explorer");
+        const path = "~";
+        console.log("hola");
         vscode.window.showInformationMessage("Abrir archivo");
-        const serverURL = "http://localhost:3000/open-file";
-        const response = await axios_1.default.post(serverURL, { content: "~" });
-        console.log(response);
+        openExplorer(path, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                //Do Something
+            }
+        });
     });
     let sendRequestToServer = vscode.commands.registerCommand("intelliuml.sendRequestToServer", async () => {
         try {
@@ -55,10 +59,9 @@ function activate(context) {
     context.subscriptions.push(openFile);
     context.subscriptions.push(sendRequestToServer);
     context.subscriptions.push(helloWorld);
-    context.subscriptions.push(disposable);
 }
 exports.activate = activate;
 // This method is called when your extension is deactivated
 function deactivate() { }
 exports.deactivate = deactivate;
-//# sourceMappingURL=extension.js.map
+//# sourceMappingURL=extension-PC_de_Daniel.js.map
