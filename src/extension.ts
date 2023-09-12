@@ -1,8 +1,19 @@
 import * as vscode from "vscode";
 import axios from "axios";
 
+async function runPython(){
+  const { spawnSync } = require('child_process');
+  const pythonProcess = await spawnSync('python', [
+    'C:/Users/danie/OneDrive - Universidad de los Andes/2023_2/codesavant-dev/Codesavant/src/server.py'
+  ]);
+  const result = pythonProcess.stdout?.toString()?.trim();
+  const error = pythonProcess.stderr?.toString()?.trim();
+  console.log(result)
+  console.log(error)
+}
 
 export function activate(context: vscode.ExtensionContext) {
+  runPython();
   let disposable = vscode.commands.registerCommand('intelliuml.disposable', async (fileUri) => {
     console.log(fileUri);
   })
