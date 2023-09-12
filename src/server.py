@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
-from tkinter import Tk
-from tkinter import filedialog
 import os
 
 app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
 
 @app.route('/process-file', methods=['POST'])
 
