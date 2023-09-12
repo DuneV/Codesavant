@@ -28,7 +28,7 @@
       },
       {
         "command": "intelliuml.sendRequestToServer",
-        "title": "IntelliUML: Subir archivo"
+        "title": "IntelliUML: Subir archivo en el editor activo"
       }
     ],
     "viewsContainers": {
@@ -51,7 +51,7 @@
     "viewsWelcome": [
       {
         "view": "extension_commands",
-        "contents": "Abre un archivo .XMI \n[Abrir Archivo](command:intelliuml.openFile)\n O sube el archivo en el editor activo \n[Subir Archivo](command:intelliuml.sendRequestToServer)"
+        "contents": "Sube el archivo .XMI en el editor activo \n[Subir archivo activo](command:intelliuml.sendRequestToServer)"
       }
     ]
   },
