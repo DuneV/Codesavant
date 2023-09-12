@@ -3,8 +3,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const axios_1 = require("axios");
+async function runFlaskServer() {
+    const { spawn } = require("child_process");
+    const pythonProcess = await spawn("python", [
+        "C:/Users/danie/OneDrive - Universidad de los Andes/2023_2/codesavant-dev/Codesavant/src/server.py",
+    ]);
+    const result = pythonProcess.stdout?.toString()?.trim();
+    const error = pythonProcess.stderr?.toString()?.trim();
+    const exit = pythonProcess.status?.toString()?.trim();
+    pythonProcess.stdout.on("data", (result) => {
+        console.log(`Flask Server Output: ${result}`);
+    });
+    pythonProcess.stderr.on("data", (error) => {
+        console.error(`Flask Server Error: ${error}`);
+    });
+    pythonProcess.on("close", (exit) => {
+        console.log(`Flask Server Process exited with code ${exit}`);
+    });
+}
+async function stopFlaskServer() {
+    try {
+        const response = await axios_1.default.post("http://localhost:3000/shutdown");
+        console.log(response.data);
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+}
 function activate(context) {
-    let disposable = vscode.commands.registerCommand('intelliuml.disposable', async (fileUri) => {
+    runFlaskServer();
+    let disposable = vscode.commands.registerCommand("intelliuml.disposable", async (fileUri) => {
         console.log(fileUri);
     });
     let openFile = vscode.commands.registerCommand("intelliuml.openFile", async () => {
@@ -52,13 +80,45 @@ function activate(context) {
         // Display a message box to the user
         vscode.window.showInformationMessage("Hello World from test-extension!");
     });
+    let stopServer = vscode.commands.registerCommand("intelliuml.stopServer", () => {
+        // The code you place here will be executed every time your command is executed
+        // Display a message box to the user
+        stopFlaskServer();
+        vscode.window.showWarningMessage("Servidor Flask detenido");
+    });
+    const createFile = vscode.commands.registerCommand("intelliuml.createFile", async () => {
+        const name = vscode.workspace.name;
+        console.log("Nombre de carpeta: " + name);
+        if (name == undefined) {
+            const opt = await vscode.window.showErrorMessage('Debe abrir una carpeta de trabajo', "Abrir carpeta");
+            if (opt == "Abrir carpeta") {
+                vscode.commands.executeCommand("vscode.openFolder");
+            }
+            console.log(opt);
+            return;
+        }
+        const newFilePath = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "new-file.txt" // Replace with the desired file name
+        );
+        const fileContent = Buffer.from("Hello, world file!", "utf8"); // Replace with the desired content
+        try {
+            await vscode.workspace.fs.writeFile(newFilePath, fileContent);
+            vscode.window.showInformationMessage("File created successfully.");
+        }
+        catch (error) {
+            vscode.window.showErrorMessage(`Error creating file: ${error.message}`);
+        }
+    });
     context.subscriptions.push(openFile);
     context.subscriptions.push(sendRequestToServer);
     context.subscriptions.push(helloWorld);
     context.subscriptions.push(disposable);
+    context.subscriptions.push(stopServer);
+    context.subscriptions.push(createFile);
 }
 exports.activate = activate;
 // This method is called when your extension is deactivated
-function deactivate() { }
+function deactivate() {
+    stopFlaskServer();
+}
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map

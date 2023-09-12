@@ -17,7 +17,17 @@ def process_file():
 
     return jsonify({'message': 'Archivo procesado correctamente'})
 
-@app.route('/open-file', methods=['POST'])
+#Server shutdown
+@app.route('/shutdown', methods=['POST'])
+def shutdown():
+    # Perform any cleanup or additional actions before shutting down, if needed
+    shutdown_server()
+    return 'Server shutting down...'
+
+def shutdown_server():
+    exit()
+
+""" @app.route('/open-file', methods=['POST'])
 def open_file():
 
     print("openfile")
@@ -26,6 +36,7 @@ def open_file():
     folder_path = filedialog.askopenfilename(initialdir="~")
     print(folder_path)
     return jsonify({'message': 'Archivo abierto correctamente'})
+ """
 
 
 if __name__ == '__main__':

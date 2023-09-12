@@ -19,6 +19,14 @@
         "title": "Hello World"
       },
       {
+        "command": "intelliuml.createFile",
+        "title": "IntelliUML: Crear archivo"
+      },
+      {
+        "command": "intelliuml.stopServer",
+        "title": "IntelliUML: Detener servidor"
+      },
+      {
         "command": "intelliuml.disposable",
         "title": "disposable"
       },
@@ -52,6 +60,9 @@
       {
         "view": "extension_commands",
         "contents": "Sube el archivo .XMI en el editor activo \n[Subir archivo activo](command:intelliuml.sendRequestToServer)"
+      },
+      {
+        "view": ""
       }
     ]
   },
@@ -78,6 +89,8 @@
   },
   "dependencies": {
     "axios": "^1.5.0",
+    "child_process": "^1.0.2",
+    "concurrently": "^8.2.1",
     "explorer-opener": "^1.0.1",
     "open-file-explorer": "^1.0.2"
   }
