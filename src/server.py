@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import xml.etree.ElementTree as ET
 import os
 import shutil
+import xmi2nl
 
 app = Flask(__name__)
 
@@ -18,9 +19,10 @@ def process_file():
     with open('data.txt', 'w') as archivo:
         texto = file_content
     shutil.copy('data.txt', 'data.xmi')
+    file_nl = xmi2nl.openFile("data.xmi")
     print(file_content)
-
     return jsonify({'message': 'Archivo procesado correctamente'})
+
 
 #Server shutdown
 @app.route('/shutdown', methods=['POST'])

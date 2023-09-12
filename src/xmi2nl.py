@@ -4,6 +4,7 @@ import xmltodict
 import json
 from PyPDF2 import PdfReader
 openedFile = False
+
 def openFile(route, override=False, pdfInfo=""):
   '''
   Abrir el archivo xmi dada la ruta de este 
